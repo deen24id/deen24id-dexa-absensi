@@ -51,7 +51,6 @@ export default function RootLayout({
                 isExternal
                 className="flex items-center gap-1 text-primary"
                 href="https://deen24id.artidata.io"
-                title="heroui.com homepage"
               >
                 <Copyright />
                 <p>Imaduddin Haetami</p>
