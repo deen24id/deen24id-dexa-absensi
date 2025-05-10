@@ -40,33 +40,10 @@ export default function Home() {
       </div>
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
         <Form />
-        <div className="flex gap-3 w-full">
-          <Link
-            isExternal
-            className={buttonStyles({
-              color: "primary",
-              radius: "full",
-              variant: "shadow",
-            })}
-            // href={siteConfig.links.docs}
-          >
-            Documentation
-          </Link>
-          <Link
-            isExternal
-            className={buttonStyles({ variant: "bordered", radius: "full" })}
-            // href={siteConfig.links.github}
-          >
-            <GithubIcon size={20} />
-            GitHub
-          </Link>
-        </div>
         <div className="mt-8">
-          <Snippet hideCopyButton hideSymbol variant="bordered">
-            <span>
-              Get started by editing <Code color="primary">app/page.tsx</Code>
-            </span>
-          </Snippet>
+          <span>
+            Get started by editing <Code color="primary">app/page.tsx</Code>
+          </span>
         </div>
       </div>
     </section>
