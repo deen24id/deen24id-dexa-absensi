@@ -1,5 +1,3 @@
-import { Code } from "@heroui/code";
-
 import { title, subtitle } from "@/components/primitives";
 import { Form } from "@/components/form";
 
@@ -12,7 +10,7 @@ const sessionDisplay =
   sessionStart.toLocaleDateString() +
   " " +
   sessionStart.toLocaleTimeString() +
-  "-" +
+  " - " +
   sessionEnd.toLocaleTimeString();
 
 export default function Home() {
@@ -36,11 +34,6 @@ export default function Home() {
       </div>
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
         <Form />
-        <div className="mt-8">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-        </div>
       </div>
     </section>
   );
