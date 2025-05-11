@@ -159,12 +159,11 @@ const RowSteps = React.forwardRef<HTMLButtonElement, RowStepsProps>(
     }, [color, className]);
 
     return (
-      <>
-        <span className="text-xl font-medium">{steps[currentStep].title}</span>
-        <nav
-          aria-label="Progress"
-          className="-my-4 max-w-fit overflow-x-auto py-4"
-        >
+      <div className="flex flex-col w-full items-center gap-0">
+        <span className="text-xl font-medium text-primary">
+          {steps[currentStep].title}
+        </span>
+        <nav aria-label="Progress" className="max-w-fit overflow-x-auto">
           <ol
             className={cn(
               "flex flex-row flex-nowrap gap-x-3",
@@ -263,7 +262,7 @@ const RowSteps = React.forwardRef<HTMLButtonElement, RowStepsProps>(
             })}
           </ol>
         </nav>
-      </>
+      </div>
     );
   }
 );
