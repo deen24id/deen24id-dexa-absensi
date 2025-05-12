@@ -42,7 +42,7 @@ export default function Map({ center }: MapProps) {
   }, [zoom]);
 
   return (
-    <div className="relative h-[42vh] aspect-square">
+    <div className="relative h-[36vh] aspect-square">
       <div ref={mapContainer} className="absolute w-full h-full" />
     </div>
   );

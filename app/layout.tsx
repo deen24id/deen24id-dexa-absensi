@@ -43,7 +43,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-            <ThemeSwitch className="self-end" />
+            <ThemeSwitch className="absolute self-end" />
             <main className="container mx-auto max-w-7xl py-4 px-4 flex-grow">
               {children}
             </main>

@@ -69,10 +69,10 @@ export function Form() {
         currentStep={step}
         steps={[
           {
-            title: "Ambil potret diri anda",
+            title: "Ambil potret diri kamu",
           },
           {
-            title: "Pastikan lokasi anda",
+            title: "Pastikan lokasi kamu",
           },
           {
             title: "Pratinjau dan kirim data absensi",
@@ -84,7 +84,7 @@ export function Form() {
       />
       <div className="w-full flex flex-col items-center gap-2">
         {step === 0 && (
-          <div className="h-[32vh] aspect-square">
+          <div className="h-[36vh] aspect-square">
             {image === null ? (
               <Camera
                 ref={camera}
@@ -113,7 +113,7 @@ export function Form() {
           </div>
         )}
         {step === 0 && (
-          <div className="w-[32vh] flex gap-2">
+          <div className="w-[36vh] flex gap-2">
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -156,10 +156,10 @@ export function Form() {
           />
         )}
       </div>
-      <div className="flex flex-row gap-2 w-[60%] ">
+      <div className="flex flex-row gap-2 w-[36vh] ">
         <Button
           disableRipple
-          className="w-[49%]"
+          className="w-full"
           color="primary"
           isDisabled={isDisabledPrev}
           variant="bordered"
@@ -169,7 +169,7 @@ export function Form() {
         </Button>
         <Button
           disableRipple
-          className="w-[49%]"
+          className="w-full"
           color="primary"
           isDisabled={isDisabledNext}
           variant="shadow"

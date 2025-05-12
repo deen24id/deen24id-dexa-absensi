@@ -4,13 +4,12 @@ import { Form } from "@/components/form";
 const p = 60 * 60 * 1000;
 const datetimeNow = new Date();
 const sessionStart = new Date(Math.floor(datetimeNow.getTime() / p) * p);
-const sessionEnd = new Date(Math.ceil(datetimeNow.getTime() / p) * p - 1);
 
 const sessionDisplay = sessionStart.toLocaleDateString();
 
 export default function Home() {
   return (
-    <section className="flex flex-col md:flex-row items-center gap-4 md:gap-0 py-4 md:py-6 h-[100%]">
+    <section className="flex flex-col md:flex-row items-center gap-8 md:gap-0 py-4 md:py-6 h-[100%]">
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
         <span className={title({ size: "sm" })}>
           Hai{" "}
