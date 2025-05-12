@@ -8,7 +8,9 @@ import { title, subtitle } from "@/components/primitives";
 import { Form } from "@/components/form";
 import { tickets } from "@/db/schema";
 
-const session = new Date().toISOString().substring(0, 10);
+const session = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Jakarta",
+}).format(new Date());
 const db = drizzle(process.env.DATABASE_URL!);
 
 export default async function Home() {
