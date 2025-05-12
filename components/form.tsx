@@ -17,6 +17,8 @@ import { Checkbox } from "@heroui/checkbox";
 import MapDynamic from "./map-dynamic";
 import { RowSteps } from "./row-steps";
 
+import { updateTicket } from "@/app/actions/update-ticket";
+
 type FormType = {
   status: "ditunggu" | "diterima" | "hilang" | null;
 };
@@ -62,8 +64,16 @@ export function Form(props: FormType) {
       setStep(step - 1);
     }
   };
-  const clickNext = () => {
-    setStep(step + 1);
+
+  const clickNext = async () => {
+    if (step < 2) {
+      setStep(step + 1);
+    } else {
+      if (coords) {
+        await updateTicket({ lat: coords?.latitude, lng: coords?.longitude });
+        setStep(3);
+      }
+    }
   };
 
   const [isPrivacy, setIsPrivacy] = useState(false);
