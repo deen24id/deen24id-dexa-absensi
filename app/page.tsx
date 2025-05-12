@@ -6,16 +6,11 @@ const datetimeNow = new Date();
 const sessionStart = new Date(Math.floor(datetimeNow.getTime() / p) * p);
 const sessionEnd = new Date(Math.ceil(datetimeNow.getTime() / p) * p - 1);
 
-const sessionDisplay =
-  sessionStart.toLocaleDateString() +
-  " " +
-  sessionStart.toLocaleTimeString() +
-  " - " +
-  sessionEnd.toLocaleTimeString();
+const sessionDisplay = sessionStart.toLocaleDateString();
 
 export default function Home() {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center gap-0 py-4 md:py-6 h-[100%]">
+    <section className="flex flex-col md:flex-row items-center gap-4 md:gap-0 py-4 md:py-6 h-[100%]">
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
         <span className={title({ size: "sm" })}>
           Hai{" "}
@@ -23,14 +18,14 @@ export default function Home() {
             Deen24ID
           </span>
         </span>
-        <br />
         <span className={title({ color: "violet", size: "sm" })}>
           Imaduddin Haetami
         </span>
-        <br />
-        <span className={subtitle()}>lakukan absensi anda</span>
-        <br />
-        <div className={subtitle({ class: "mt-2" })}>{sessionDisplay}</div>
+        <span className={subtitle()}>Lakukan absensi kamu</span>
+        <div className="flex flex-row justify-center gap-4">
+          <span>Sesi: {sessionDisplay}</span>
+          <span>Status: Ditunggu</span>
+        </div>
       </div>
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
         <Form />
