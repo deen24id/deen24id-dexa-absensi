@@ -113,7 +113,7 @@ export function Form() {
           </div>
         )}
         {step === 0 && (
-          <div className="w-[32vh] flex gap-[2%]">
+          <div className="w-[32vh] flex gap-2">
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -156,20 +156,20 @@ export function Form() {
           />
         )}
       </div>
-      <div className="flex flex-row gap-[8%] w-[60%] ">
+      <div className="flex flex-row gap-2 w-[60%] ">
         <Button
           disableRipple
-          className="w-[46%]"
+          className="w-[49%]"
           color="primary"
           isDisabled={isDisabledPrev}
           variant="bordered"
           onPress={clickPrev}
         >
-          {step === 0 ? "ulangi" : "kembali"}
+          {step === 0 ? "Ulangi" : "Kembali"}
         </Button>
         <Button
           disableRipple
-          className="w-[46%]"
+          className="w-[49%]"
           color="primary"
           isDisabled={isDisabledNext}
           variant="shadow"
