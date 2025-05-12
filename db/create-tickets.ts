@@ -53,17 +53,23 @@ const users = [
 
 async function main() {
   try {
-    const ticketEntry: typeof tickets.$inferInsert = {
-      name: users[9].name,
-      username: users[9].username,
-      sesiTanggal: new Date().toISOString().substring(0, 10),
-      status: "ditunggu",
-    };
+    const sesiTanggal = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Jakarta",
+    }).format(new Date());
 
-    const data = await db.insert(tickets).values(ticketEntry);
+    const ticketEntries = users.map(
+      (val) =>
+        ({
+          ...val,
+          sesiTanggal,
+          status: "ditunggu",
+        }) as typeof tickets.$inferInsert
+    );
+
+    const data = await db.insert(tickets).values(ticketEntries);
 
     console.log(chalk.bgGreenBright("NEW TICKET CREATED!"), "\n");
-    console.log(ticketEntry, "\n");
+    console.log(ticketEntries, "\n");
     console.log(data);
   } catch (err) {
     console.log(chalk.bgRedBright(err));
