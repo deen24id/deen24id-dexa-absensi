@@ -12,6 +12,7 @@ import { Camera, CameraType } from "react-camera-pro";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 import { useGeolocated } from "react-geolocated";
+import { Checkbox } from "@heroui/checkbox";
 
 import MapDynamic from "./map-dynamic";
 import { RowSteps } from "./row-steps";
@@ -47,25 +48,31 @@ export function Form() {
 
   const isDisabledCamera = !!image;
   const isDisabledPrev = !!!image;
-  const isDisabledNext = !!!image;
 
   const { coords } = useGeolocated();
 
   const clickPrev = () => {
     if (step === 0) {
       setImage(null);
-    } else if (step === 1) {
-      setStep(0);
+    } else {
+      setStep(step - 1);
     }
   };
   const clickNext = () => {
     setStep(step + 1);
   };
 
+  const [isPrivacy, setIsPrivacy] = useState(false);
+  const clickPrivacy = () => {
+    setIsPrivacy(!isPrivacy);
+  };
+
+  const isDisabledNext = !!!image || (step === 2 && !isPrivacy);
+
   return (
     <div className="flex flex-col w-full items-center gap-4">
       <RowSteps
-        className=""
+        color={step === 3 ? "success" : "primary"}
         currentStep={step}
         steps={[
           {
@@ -75,7 +82,7 @@ export function Form() {
             title: "Pastikan lokasi kamu",
           },
           {
-            title: "Pratinjau dan kirim data absensi",
+            title: "Pratinjau dan kirim absensi",
           },
           {
             title: "Data absensimu telah diterima",
@@ -151,33 +158,58 @@ export function Form() {
           </div>
         )}
         {step === 1 && coords && (
-          <MapDynamic
-            center={{ lat: coords.latitude, lng: coords.longitude }}
-          />
+          <div className="relative h-[36vh] aspect-square">
+            <MapDynamic
+              center={{ lat: coords.latitude, lng: coords.longitude }}
+            />
+          </div>
+        )}
+        {step === 2 && image && coords && (
+          <div className="w-full flex md:flex-row justify-center">
+            <Image
+              alt="selfie"
+              className="w-[50%] md:w-[40%] aspect-square"
+              height={0}
+              src={image}
+              width={0}
+            />
+            <div className="relative w-[50%] md:w-[40%] aspect-square">
+              <MapDynamic
+                center={{ lat: coords.latitude, lng: coords.longitude }}
+              />
+            </div>
+          </div>
+        )}
+        {step === 2 && (
+          <Checkbox isSelected={isPrivacy} onValueChange={clickPrivacy}>
+            Saya menyutujui kebijakan privasi
+          </Checkbox>
         )}
       </div>
-      <div className="flex flex-row gap-2 w-[36vh] ">
-        <Button
-          disableRipple
-          className="w-full"
-          color="primary"
-          isDisabled={isDisabledPrev}
-          variant="bordered"
-          onPress={clickPrev}
-        >
-          {step === 0 ? "Ulangi" : "Kembali"}
-        </Button>
-        <Button
-          disableRipple
-          className="w-full"
-          color="primary"
-          isDisabled={isDisabledNext}
-          variant="shadow"
-          onPress={clickNext}
-        >
-          Lanjut
-        </Button>
-      </div>
+      {step !== 3 && (
+        <div className="flex flex-row gap-2 w-[36vh] ">
+          <Button
+            disableRipple
+            className="w-full"
+            color="primary"
+            isDisabled={isDisabledPrev}
+            variant="bordered"
+            onPress={clickPrev}
+          >
+            {step === 0 ? "Ulangi" : "Kembali"}
+          </Button>
+          <Button
+            disableRipple
+            className="w-full"
+            color="primary"
+            isDisabled={isDisabledNext}
+            variant="shadow"
+            onPress={clickNext}
+          >
+            {step === 2 ? "Kirim" : "Lanjut"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

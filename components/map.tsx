@@ -41,9 +41,5 @@ export default function Map({ center }: MapProps) {
     L.marker([center.lat, center.lng], { icon: divIcon }).addTo(map.current);
   }, [zoom]);
 
-  return (
-    <div className="relative h-[36vh] aspect-square">
-      <div ref={mapContainer} className="absolute w-full h-full" />
-    </div>
-  );
+  return <div ref={mapContainer} className="absolute w-full h-full" />;
 }

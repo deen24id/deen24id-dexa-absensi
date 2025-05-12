@@ -160,7 +160,13 @@ const RowSteps = React.forwardRef<HTMLButtonElement, RowStepsProps>(
 
     return (
       <div className="flex flex-col w-full items-center gap-0">
-        <span className="text-xl font-medium text-primary">
+        <span
+          className={cn(
+            "text-xl font-medium",
+            currentStep === 3 ? "text-success" : "text-primary",
+            className
+          )}
+        >
           {steps[currentStep].title}
         </span>
         <nav aria-label="Progress" className="max-w-fit overflow-x-auto">
