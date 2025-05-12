@@ -10,8 +10,8 @@ import { fontSans } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: {
-    default: "Deen24ID - Dexa Group Tes",
-    template: `%s - Dexa Group Tes`,
+    default: "Deen24ID - Dexa Group Absensi",
+    template: `%s - Dexa Group Absensi`,
   },
   description: "Aplikasi absensi untuk tes masuk dexa group",
   icons: {

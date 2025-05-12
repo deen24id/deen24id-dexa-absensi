@@ -15,20 +15,20 @@ const sessionDisplay =
 
 export default function Home() {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center gap-4 py-4 md:py-6 h-[100%]">
+    <section className="flex flex-col md:flex-row items-center justify-center gap-0 py-4 md:py-6 h-[100%]">
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
         <span className={title({ size: "sm" })}>
           Hai{" "}
-          <span className={title({ color: "violet", size: "md" })}>
+          <span className={title({ color: "violet", size: "sm" })}>
             Deen24ID
           </span>
         </span>
         <br />
-        <span className={title({ color: "violet", size: "md" })}>
+        <span className={title({ color: "violet", size: "sm" })}>
           Imaduddin Haetami
         </span>
         <br />
-        <span className={title({ size: "sm" })}>lakukan absensi anda</span>
+        <span className={subtitle()}>lakukan absensi anda</span>
         <br />
         <div className={subtitle({ class: "mt-2" })}>{sessionDisplay}</div>
       </div>

@@ -11,7 +11,9 @@ import { CameraIcon, Settings2Icon } from "lucide-react";
 import { Camera, CameraType } from "react-camera-pro";
 import { Button } from "@heroui/button";
 import Image from "next/image";
+import { useGeolocated } from "react-geolocated";
 
+import MapDynamic from "./map-dynamic";
 import { RowSteps } from "./row-steps";
 
 export function Form() {
@@ -43,6 +45,12 @@ export function Form() {
     }
   };
 
+  const isDisabledCamera = !!image;
+  const isDisabledPrev = !!!image;
+  const isDisabledNext = !!!image;
+
+  const { coords } = useGeolocated();
+
   const clickPrev = () => {
     if (step === 0) {
       setImage(null);
@@ -53,10 +61,6 @@ export function Form() {
   const clickNext = () => {
     setStep(step + 1);
   };
-
-  const isDisabledCamera = !!image;
-  const isDisabledPrev = !!!image;
-  const isDisabledNext = !!!image;
 
   return (
     <div className="flex flex-col w-full items-center gap-4">
@@ -146,7 +150,11 @@ export function Form() {
             </Button>
           </div>
         )}
-        {step === 1 && <span className="h-full">test</span>}
+        {step === 1 && coords && (
+          <MapDynamic
+            center={{ lat: coords.latitude, lng: coords.longitude }}
+          />
+        )}
       </div>
       <div className="flex flex-row gap-[8%] w-[60%] ">
         <Button
