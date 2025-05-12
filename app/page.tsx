@@ -1,18 +1,26 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { Button } from "@heroui/button";
 import { SignOutButton } from "@clerk/nextjs";
+import { drizzle } from "drizzle-orm/neon-http";
+import { sql } from "drizzle-orm";
 
 import { title, subtitle } from "@/components/primitives";
 import { Form } from "@/components/form";
+import { tickets } from "@/db/schema";
 
-const p = 60 * 60 * 1000;
-const datetimeNow = new Date();
-const sessionStart = new Date(Math.floor(datetimeNow.getTime() / p) * p);
-
-const sessionDisplay = sessionStart.toLocaleDateString();
+const session = new Date().toISOString().substring(0, 10);
+const db = drizzle(process.env.DATABASE_URL!);
 
 export default async function Home() {
   const user = await currentUser();
+  const ticket = (
+    await db
+      .select({ status: tickets.status })
+      .from(tickets)
+      .where(
+        sql`${tickets.username} = ${user?.username} and ${tickets.sesiTanggal} = ${session}`
+      )
+  )[0];
 
   return (
     <section className="flex flex-col md:flex-row items-center gap-8 md:gap-0 py-4 md:py-6 h-[100%]">
@@ -28,9 +36,16 @@ export default async function Home() {
         </span>
         <span className={subtitle()}>Lakukan absensi kamu</span>
         <div className="flex flex-row justify-center gap-4">
-          <span>Sesi: {sessionDisplay}</span>
+          <span>Sesi: {session}</span>
           <span>
-            Status: <span className="text-warning">Ditunggu</span>
+            Status:{" "}
+            <span
+              className={
+                ticket.status === "ditunggu" ? "text-warning" : "text-success"
+              }
+            >
+              {ticket.status}
+            </span>
           </span>
         </div>
         <div>
@@ -47,7 +62,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="flex flex-col w-full md:w-[50%] text-center justify-center md:h-[100%]">
-        <Form />
+        <Form status={ticket.status} />
       </div>
     </section>
   );

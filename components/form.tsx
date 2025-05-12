@@ -17,8 +17,12 @@ import { Checkbox } from "@heroui/checkbox";
 import MapDynamic from "./map-dynamic";
 import { RowSteps } from "./row-steps";
 
-export function Form() {
-  const [step, setStep] = useState(0);
+type FormType = {
+  status: "ditunggu" | "diterima" | "hilang" | null;
+};
+
+export function Form(props: FormType) {
+  const [step, setStep] = useState(props.status === "ditunggu" ? 0 : 3);
 
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [activeDeviceId, setActiveDeviceId] = useState<string | undefined>(
