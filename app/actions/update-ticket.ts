@@ -16,6 +16,8 @@ const sesiTanggal = new Intl.DateTimeFormat("en-CA", {
 type TUpdateTicket = {
   lat: number;
   lng: number;
+  imageKitId: string;
+  imageKitUrl: string;
 };
 
 export async function updateTicket(props: TUpdateTicket) {
@@ -25,9 +27,8 @@ export async function updateTicket(props: TUpdateTicket) {
     const data = await db
       .update(tickets)
       .set({
+        ...props,
         status: "diterima",
-        lat: props.lat,
-        lng: props.lng,
         absenTW: new Date(),
       })
       .where(

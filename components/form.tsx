@@ -13,17 +13,26 @@ import { Button } from "@heroui/button";
 import Image from "next/image";
 import { useGeolocated } from "react-geolocated";
 import { Checkbox } from "@heroui/checkbox";
+import { upload } from "@imagekit/next";
+import { useUser } from "@clerk/nextjs";
 
 import MapDynamic from "./map-dynamic";
 import { RowSteps } from "./row-steps";
 
 import { updateTicket } from "@/app/actions/update-ticket";
+import { getImageKitTokens } from "@/app/actions/get-image-kit-tokens";
+
+const session = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Jakarta",
+}).format(new Date());
 
 type FormType = {
   status: "ditunggu" | "diterima" | "hilang" | null;
 };
 
 export function Form(props: FormType) {
+  const { user } = useUser();
+
   const [step, setStep] = useState(props.status === "ditunggu" ? 0 : 3);
 
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
@@ -65,12 +74,27 @@ export function Form(props: FormType) {
     }
   };
 
+  const [isLoading, setIsLoading] = useState(false);
   const clickNext = async () => {
     if (step < 2) {
       setStep(step + 1);
     } else {
-      if (coords) {
-        await updateTicket({ lat: coords?.latitude, lng: coords?.longitude });
+      if (coords && image) {
+        setIsLoading(true);
+        const tokenData = await getImageKitTokens();
+        const imageKitData = await upload({
+          ...tokenData,
+          file: image,
+          fileName: `${user?.username}|${session}`,
+        });
+
+        await updateTicket({
+          lat: coords?.latitude,
+          lng: coords?.longitude,
+          imageKitId: imageKitData.fileId!,
+          imageKitUrl: imageKitData.url!,
+        });
+        setIsLoading(false);
         setStep(3);
       }
     }
@@ -217,6 +241,7 @@ export function Form(props: FormType) {
             className="w-full"
             color="primary"
             isDisabled={isDisabledNext}
+            isLoading={isLoading}
             variant="shadow"
             onPress={clickNext}
           >
