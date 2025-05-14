@@ -9,7 +9,9 @@ import { tickets } from "@/db/schema";
 
 const db = drizzle(process.env.DATABASE_URL!);
 
-const session = new Date().toISOString().substring(0, 10);
+const sesiTanggal = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Jakarta",
+}).format(new Date());
 
 type TUpdateTicket = {
   lat: number;
@@ -29,7 +31,7 @@ export async function updateTicket(props: TUpdateTicket) {
         absenTW: new Date(),
       })
       .where(
-        sql`${tickets.username} = ${user?.username} and ${tickets.sesiTanggal} = ${session}`
+        sql`${tickets.username} = ${user?.username} and ${tickets.sesiTanggal} = ${sesiTanggal}`
       );
 
     console.log("TICKET UPDATED!");
