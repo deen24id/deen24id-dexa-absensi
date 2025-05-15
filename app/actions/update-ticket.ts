@@ -6,6 +6,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { sql } from "drizzle-orm";
 
 import { tickets } from "@/db/schema";
+import { revalidatePath } from "next/cache";
 
 const db = drizzle(process.env.DATABASE_URL!);
 
@@ -34,6 +35,8 @@ export async function updateTicket(props: TUpdateTicket) {
       .where(
         sql`${tickets.username} = ${user?.username} and ${tickets.sesiTanggal} = ${sesiTanggal}`
       );
+
+    revalidatePath("/");
 
     console.log("TICKET UPDATED!");
     console.log(data);
